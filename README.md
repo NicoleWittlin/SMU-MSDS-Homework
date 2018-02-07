@@ -1,2 +1,5 @@
 # SMU-MSDS-Homework
-NWittlin's home for SMU MSDS program
+NWittlin's homework for SMU MSDS program
+
+Contact Information:
+nwittlin@smu.edu
