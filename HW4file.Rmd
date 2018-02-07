@@ -1,0 +1,54 @@
+---
+title: "NW6306HW4"
+author: "Nicole Wittlin"
+date: "February 5, 2018"
+output:
+  html_document:
+    keep_md: yes
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### QUESTION 1
+#### Install and load FiveThirtyEight library ##
+```{r}
+chooseCRANmirror(graphics=FALSE, ind=1)
+install.packages("fivethirtyeight")
+library(fivethirtyeight)
+```
+```{r}
+## Get Dataset 18 - Recent College Grad Data
+df <- college_recent_grads
+## URL of News Story - The Economic Guide to Picking A College Major
+vignette("fivethirtyeight", package = "fivethirtyeight")
+### http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/
+## Dimensions and Column Names of Data Set
+dim(df)
+colnames(df)
+```
+
+### QUESTION 2
+```{r}
+## Column Names
+colnames(df)
+ncol(df)
+
+## Summary of Majors
+major_count <- table(df$major_category)
+par(las=2)
+barplot(major_count, xlab="Unique Values", ylab="Major", main="fivethirtyeight College Majors", col="green", horiz=TRUE)
+
+## Create Data Set
+write.csv(df, file="fivethirtyeightdata.csv")
+write.csv(major_count, file="538counts.csv")
+```
+
+### Question 3
+
+### https://github.com/NicoleWittlin/SMU-MSDS-Homework
+
+
+
