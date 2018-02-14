@@ -1,0 +1,96 @@
+---
+title: "Unit 5 HW"
+author: "Nicole Wittlin"
+date: "February 14, 2018"
+output: 
+    html_document:
+      keep_md: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## QUESTION 1
+
+### Part a: Import Text File (note, I created a csv file with the data to import)
+```{r}
+setwd("C:/Users/Nicole Wittlin/Documents/Classes/MSDS6306/Unit 5")
+df <- read.csv("yob2016.csv", header=FALSE)
+colnames(df)
+colnames(df)[colnames(df) == "V1"] <- "Name"
+colnames(df)[colnames(df) == "V2"] <- "Gender"
+colnames(df)[colnames(df) == "V3"] <- "Count"
+```
+
+### Part b: Display Summary and Structure of Data
+```{r}
+summary(df)
+str(df)
+```
+
+### Part c: Locate the duplicate data with "yyy"
+```{r}
+which(grepl("yyy", df$Name))
+df[212,]
+```
+
+### Part d: Create y2016 data set
+```{r}
+y2016 <- subset(x=df, df$Name != "Fionayyy")
+summary(y2016)
+str(y2016)
+```
+
+## QUESTION 2
+
+### Part a: Import Text File
+
+```{r}
+y2015 <- read.csv("yob2015.csv", header=FALSE)
+colnames(y2015)
+colnames(y2015)[colnames(y2015) == "V1"] <- "Name"
+colnames(y2015)[colnames(y2015) == "V2"] <- "Gender"
+colnames(y2015)[colnames(y2015) == "V3"] <- "Count"
+```
+
+### Part b: Final 10 rows
+```{r}
+tail(y2015, 10)
+```
+### It is interesting that all of these have a count of 5. I wonder if there was a minimum number of kids that needed to have the name to be included.
+
+### Part c: Merge Data Sets
+```{r}
+Final <- merge(x=y2015, y=y2016, union("Name", "Gender"))
+```
+
+## QUESTION 3
+
+### Part a: How many popular-named newborns?
+```{r}
+Final$Total <- (Final$Count.x + Final$Count.y)
+head(Final)
+sum(Final$Total)
+```
+### There were 7,239,231 newborns given popular names in 2015 and 2016.
+
+### Part b: Most Popular Names 
+```{r}
+SortedFinal <- Final[order(-Final$Total),]
+head(SortedFinal, 10)
+```
+
+### Part c: Most Popular Girls' Names
+```{r}
+JustGirls <- subset(x=SortedFinal, SortedFinal$Gender != "M")
+head(JustGirls, 10)
+```
+
+### Part d: Write File of Names and Totals
+```{r}
+write.csv(JustGirls, file="FinalGirls.csv")
+```
+
+## QUESTION 4
+### https://github.com/NicoleWittlin/SMU-MSDS-Homework
